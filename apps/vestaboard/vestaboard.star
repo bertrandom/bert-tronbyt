@@ -1,8 +1,9 @@
 load("render.star", "render")
-load("http.star", "http")
 load("color.star", "color")
+load("encoding/json.star", "json")
 
-VESTABOARD_PATTERN_URL = "http://vbpatterns.smittn.com/current"
+# Blank board shown until the pattern server pushes a message_body
+EMPTY_GRID = [[0] * 21 for _ in range(6)]
 
 def convert_code_to_color(code):
     if code == 63:
@@ -43,7 +44,7 @@ def generate_row(row_data):
 
         children.append(render.Box(
             width=3,
-            height=6,
+            height=5,
             child=render.Box(
                 width=2,
                 height=3,
@@ -64,7 +65,7 @@ def generate_grid(grid_data):
 
     children = []
 
-    for i in range(0,5):
+    for i in range(0,6):
         children.append(generate_row(grid_data[i]))
 
     return render.Column(
@@ -73,13 +74,10 @@ def generate_grid(grid_data):
     )
     
 
-def main():
+def main(config):
 
-    rep = http.get(VESTABOARD_PATTERN_URL)
-    if rep.status_code != 200:
-        fail("Vestaboard pattern request failed with status %d", rep.status_code)
-
-    grid_data = rep.json()["pattern"]
+    message_body = config.get("message_body")
+    grid_data = json.decode(message_body) if message_body else EMPTY_GRID
 
     background_color = "#1F1F1F"
     background_color = "#111111"
