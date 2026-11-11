@@ -29,20 +29,21 @@ def hour_12(h):
     h = h % 12
     return 12 if h == 0 else h
 
-def hour_row(h, use_24h):
+def hour_row(h, use_24h, show_unused):
+    # Unused high bits are always 0, so drawing them just shows unlit dots.
     if use_24h:
         # 0-23 needs 5 bits.
-        return bit_row(h, blank = 1)
+        return bit_row(h, blank = 0 if show_unused else 1)
 
     # 1-12 needs 4 bits.
-    return bit_row(hour_12(h), blank = 2)
+    return bit_row(hour_12(h), blank = 0 if show_unused else 2)
 
-def frame(t, use_24h):
+def frame(t, use_24h, show_unused):
     return render.Column(
         expanded = True,
         main_align = "space_evenly",
         children = [
-            hour_row(t.hour, use_24h),
+            hour_row(t.hour, use_24h, show_unused),
             bit_row(t.minute),
             bit_row(t.second),
         ],
@@ -51,6 +52,7 @@ def frame(t, use_24h):
 def main(config):
     timezone = config.get("timezone") or "America/Los_Angeles"
     use_24h = config.bool("use_24h", False)
+    show_unused = config.bool("show_unused_hour_dots", True)
 
     # Tronbyt renders the next image when the current one *starts* displaying,
     # so frames are shown roughly one image-duration after they are rendered.
@@ -62,7 +64,7 @@ def main(config):
         delay = 1000,
         show_full_animation = True,
         child = render.Animation(
-            children = [frame(start + time.second * i, use_24h) for i in range(FRAMES)],
+            children = [frame(start + time.second * i, use_24h, show_unused) for i in range(FRAMES)],
         ),
     )
 
@@ -85,6 +87,13 @@ def get_schema():
                 desc = "Show hours as 0-23 instead of 1-12.",
                 icon = "clock",
                 default = False,
+            ),
+            schema.Toggle(
+                id = "show_unused_hour_dots",
+                name = "Show unused hour dots",
+                desc = "Draw unlit dots in the hour row's leftmost positions, which are never used.",
+                icon = "circle",
+                default = True,
             ),
             schema.Text(
                 id = "offset_secs",
