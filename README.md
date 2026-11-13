@@ -6,12 +6,6 @@ that repo's layout: `apps/<packagename>/` with a `manifest.yaml` and preview ima
 
 ## Apps
 
-### simplebinaryclock
-
-Simple Binary Clock: shows the time as three rows of binary dots (hours, minutes, seconds).
-See [its README](apps/simplebinaryclock/README.md) for settings and how to regenerate the
-preview images.
-
 ### vestaboard
 
 Draws a Vestaboard pattern (6 rows × 21 bits) on the 64×32 display.
