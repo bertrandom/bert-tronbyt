@@ -1,0 +1,15 @@
+---
+id: tixclock-square-leds
+name: Tix Clock Square LEDs
+summary: Time as counts of lit squares
+desc: Shows the time as four blocks of squares, hours tens, hours ones, minutes tens and minutes ones. The number of lit squares in each block is that digit; which squares light up is random and reshuffles every 1 second, 4 seconds or minute. Has two color schemes plus custom colors, and supports 12- and 24-hour time.
+author: bertrandom
+fileName: tixclock_square_leds.star
+packageName: tixclocksquareleds
+supports64x64: true
+recommendedInterval: 0
+category: clocks
+tags:
+  - clock
+  - time
+  - tech

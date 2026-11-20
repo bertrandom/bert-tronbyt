@@ -6,6 +6,12 @@ that repo's layout: `apps/<packagename>/` with a `manifest.yaml` and preview ima
 
 ## Apps
 
+### tixclocksquareleds
+
+A Tix-style clock: four blocks of colored squares where the number lit in each block is a digit
+of the time (hours tens, hours ones, minutes tens, minutes ones). See
+[apps/tixclocksquareleds/README.md](apps/tixclocksquareleds/README.md).
+
 ### vestaboard
 
 Draws a Vestaboard pattern (6 rows × 21 bits) on the 64×32 display.

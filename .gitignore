@@ -59,3 +59,6 @@ Backups.backupdb
 .MobileBackups.trash
 MobileBackups.trash
 tmbootpicker.efi
+
+# Pixlet render cache
+.starcache/
